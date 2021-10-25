@@ -25,4 +25,9 @@ class Customer extends Authenticatable
             return 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
         endif;
     }
+
+    public function product()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('qty');
+    }
 }
