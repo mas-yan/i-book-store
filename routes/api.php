@@ -30,8 +30,8 @@ Route::get('/product/{slug}', [ProductController::class, 'show']);
 Route::get('/slider', SliderController::class);
 
 Route::middleware('auth:api')->group(function () {
-  Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth:api');
-  Route::post('/profile', [ProfileController::class, 'update'])->middleware('auth:api');
-  Route::post('/profile/password', [ProfileController::class, 'password'])->middleware('auth:api');
-  Route::get('/cart', CartController::class)->middleware('auth:api');
+  Route::get('/profile', [ProfileController::class, 'index']);
+  Route::post('/profile', [ProfileController::class, 'update']);
+  Route::post('/profile/password', [ProfileController::class, 'password']);
+  Route::get('/cart', CartController::class);
 });
