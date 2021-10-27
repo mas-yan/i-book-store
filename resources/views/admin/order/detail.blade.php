@@ -78,7 +78,7 @@
         @foreach ($order->product as $item)
           <div class="row mb-3 rounded shadow">
             <div class="col p-3">
-              <img class="img-fluid rounded" src="{{$item->image}}" alt="Photo">
+              <img class="img-fluid rounded" style="height: 200px" src="{{$item->image}}" alt="Photo">
             </div>
             <div class="col">
               <p class="lead mt-3">{{$item->title}}</p>

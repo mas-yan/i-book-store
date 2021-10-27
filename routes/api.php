@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RegisterController;
@@ -27,6 +29,12 @@ Route::get('/categoryHome', [CategoryController::class, 'category']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{slug}', [ProductController::class, 'show']);
 Route::get('/slider', SliderController::class);
-Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth:api');
-Route::post('/profile', [ProfileController::class, 'update'])->middleware('auth:api');
-Route::post('/profile/password', [ProfileController::class, 'password'])->middleware('auth:api');
+
+Route::middleware('auth:api')->group(function () {
+  Route::get('/profile', [ProfileController::class, 'index']);
+  Route::post('/profile', [ProfileController::class, 'update']);
+  Route::post('/profile/password', [ProfileController::class, 'password']);
+  Route::get('/cart', CartController::class);
+  Route::get('/order', [OrderController::class, 'index']);
+  Route::get('/order/{invoice}', [OrderController::class, 'show']);
+});
