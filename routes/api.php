@@ -37,4 +37,8 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/cart', CartController::class);
   Route::get('/order', [OrderController::class, 'index']);
   Route::get('/order/{invoice}', [OrderController::class, 'show']);
+  Route::get('/addCart/{product}', [OrderController::class, 'addCart']);
+  // Route::get('/addQty/{product}', [OrderController::class, 'addQty']);
+  // Route::get('/subQty/{product}', [OrderController::class, 'subQty']);
+  Route::get('/transaction', [OrderController::class, 'transaction']);
 });
