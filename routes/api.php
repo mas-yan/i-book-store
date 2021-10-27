@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\SliderController;
+use App\Http\Controllers\CheckOngkirController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,5 +40,7 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/order/{invoice}', [OrderController::class, 'show']);
   Route::get('/addCart/{product}', [OrderController::class, 'addCart']);
   Route::post('/transaction', [OrderController::class, 'transaction']);
+  Route::post('/ongkir', [CheckOngkirController::class, 'check_ongkir']);
+  Route::get('/cities/{province_id}', [CheckOngkirController::class, 'getCities']);
 });
 Route::post('/transaction/notification', [OrderController::class, 'notificationHandler']);
