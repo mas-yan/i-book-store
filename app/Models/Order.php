@@ -10,6 +10,11 @@ class Order extends Model
 {
     use HasFactory;
 
+    public function getRouteKeyName()
+    {
+        return 'invoice';
+    }
+
     protected $fillable = [
         'customer_id',
         'invoice',
@@ -40,4 +45,9 @@ class Order extends Model
     {
         return Carbon::parse($date)->format('d-M-Y');
     }
+
+    // public function getGrandTotalAttribute($total)
+    // {
+    //     return $total * $this->pivot();
+    // }
 }

@@ -17,6 +17,11 @@ class Customer extends Authenticatable
         'remember_token',
     ];
 
+    public function product()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('qty');
+    }
+
     public function getAvatarAttribute($avatar)
     {
         if ($avatar != null) :
@@ -26,8 +31,8 @@ class Customer extends Authenticatable
         endif;
     }
 
-    public function product()
+    public function total()
     {
-        return $this->belongsToMany(Product::class)->withPivot('qty');
+        return $this->belongsToMany(Product::class)->withPivot('qty')->selectRaw('price * qty as total');
     }
 }

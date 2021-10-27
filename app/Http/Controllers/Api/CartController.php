@@ -15,11 +15,11 @@ class CartController extends Controller
      */
     public function __invoke()
     {
-        $cart = Customer::with('product')->where('id', auth()->guard('api')->user()->id)->get();
+        $cart = Customer::where('id', auth()->guard('api')->user()->id)->with(['product', 'total'])->get();
         return response()->json([
             'success' => true,
             'message' => 'Data cart',
-            'data' => $cart
+            'data' => $cart,
         ]);
     }
 }
