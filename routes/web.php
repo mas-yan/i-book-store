@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\OrderController;
@@ -25,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', DashboardController::class)->name('dashboard');
     Route::get('categoriesTable', [CategoryController::class, 'categoriesTable'])->name('categoriesTable');
     Route::resource('/categories', CategoryController::class)->except('show');
+    Route::get('/dataDiscount', [DiscountController::class, 'dataDiscount']);
+    Route::resource('/discount', DiscountController::class)->except('show');
     Route::resource('/product', ProductController::class);
     Route::get('/dataProducts', [ProductController::class, 'dataProducts']);
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

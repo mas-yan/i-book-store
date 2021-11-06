@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\CheckOngkirController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', RegisterController::class);
 Route::post('/login', LoginController::class);
-Route::get('/category/{slug}', [CategoryController::class, 'show']);
-Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/categoryHome', [CategoryController::class, 'category']);
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/category/{slug}', [CategoryController::class, 'show']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{slug}', [ProductController::class, 'show']);
 Route::get('/slider', SliderController::class);
 
 Route::middleware('auth:api')->group(function () {
+  Route::get('/user', function (Request $request) {
+    return $request->user();
+  });
   Route::get('/profile', [ProfileController::class, 'index']);
   Route::post('/profile', [ProfileController::class, 'update']);
   Route::post('/profile/password', [ProfileController::class, 'password']);

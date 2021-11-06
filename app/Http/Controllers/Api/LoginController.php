@@ -32,7 +32,7 @@ class LoginController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'These credentials do not match our records.',
-            ], 201);
+            ], 400);
         }
 
         return response()->json([

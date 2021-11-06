@@ -35,8 +35,8 @@
         <li class="nav-header">PRODUCTS</li>
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item has-treeview {{(Request::is('product*') || Request::is('categories*'))?'menu-open':''}}">
-          <a href="#" class="nav-link {{(Request::is('product*') || Request::is('categories*'))?'active':''}}">
+        <li class="nav-item has-treeview {{(Request::is('product*') || Request::is('categories*') || Request::is('discount*'))?'menu-open':''}}">
+          <a href="#" class="nav-link {{(Request::is('product*') || Request::is('categories*')|| Request::is('discount*'))?'active':''}}">
             <i class="nav-icon fas fa-shopping-bag"></i>
             <p>
               Products
@@ -54,6 +54,12 @@
               <a href="{{route('product.index')}}" class="nav-link {{Request::is('product*')?'active':''}}">
                 <i class="nav-icon far fa-circle nav-icon"></i>
                 <p>Products</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('discount.index')}}" class="nav-link {{Request::is('discount*')?'active':''}}">
+                <i class="nav-icon far fa-circle nav-icon"></i>
+                <p>Discount Products</p>
               </a>
             </li>
           </ul>

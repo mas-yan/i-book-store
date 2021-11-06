@@ -70,10 +70,17 @@ class ProfileController extends Controller
     public function password(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'old_password'=> 'required',
             'password' => 'required|confirmed|min:8'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
+        }
+
+        if (! Hash::check($request->old_password, $request->user()->password)) {
+            return response()->json([
+                'message' => 'The provided password does not match our records.'
+                ], 400);
         }
 
         $password = Customer::whereId(auth()->guard('api')->user()->id)->first();
