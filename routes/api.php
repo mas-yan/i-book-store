@@ -39,10 +39,10 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/profile', [ProfileController::class, 'index']);
   Route::post('/profile', [ProfileController::class, 'update']);
   Route::post('/profile/password', [ProfileController::class, 'password']);
+  Route::get('/addCart/{product}', [OrderController::class, 'addCart']);
   Route::get('/cart', CartController::class);
   Route::get('/order', [OrderController::class, 'index']);
   Route::get('/order/{invoice}', [OrderController::class, 'show']);
-  Route::get('/addCart/{product}', [OrderController::class, 'addCart']);
   Route::post('/transaction', [OrderController::class, 'transaction']);
   Route::post('/ongkir', [CheckOngkirController::class, 'check_ongkir']);
   Route::get('/cities/{province_id}', [CheckOngkirController::class, 'getCities']);

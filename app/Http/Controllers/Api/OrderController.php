@@ -49,7 +49,13 @@ class OrderController extends Controller
     public function addCart(Product $product)
     {
         $customer = Customer::find(auth()->guard('api')->user()->id);
-        $product->customer()->attach($customer, ['qty' => 1]);
+        $cart = $product->customer()->first();
+        if ($cart) {
+            $cart->pivot->qty += 1;
+            $cart->pivot->save();
+        } else {
+            $product->customer()->attach($customer, ['qty' => 1]);
+        }
 
         return response()->json([
             'success' => true,

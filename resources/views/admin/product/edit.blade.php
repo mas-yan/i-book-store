@@ -68,7 +68,7 @@
         </div>
         <div class="form-group">
           <label for="detail">Desciption Product</label>
-          <textarea class="form-control @error('detail') is-invalid @enderror" name="detail" id="detail" placeholder="Detail Product" rows="5">{{old('detail',$product->detail_product)}}</textarea>
+          <textarea class="form-control @error('detail') is-invalid @enderror" name="detail" id="detail" placeholder="Detail Product" rows="10">{{old('detail',$product->detail_product)}}</textarea>
           @error('detail') 
             <div class="invalid-feedback">
               {{$message}}

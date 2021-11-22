@@ -17,7 +17,6 @@ class ProductController extends Controller
     {
         $product = Product::leftJoin('categories', 'categories.id', '=', 'products.category_id')->select('title', 'price', 'products.slug', 'stok', 'products.image', 'products.id', 'categories.name')->orderBy('products.created_at', 'desc');
 
-        // dd($product->categories->nam);
         return DataTables::of($product)
             ->addIndexColumn()
             ->addColumn('price', function ($price) {
@@ -143,7 +142,7 @@ class ProductController extends Controller
             ]);
 
             $product->update([
-                'name' => $request->title,
+                'title' => $request->title,
                 'category_id' => $request->category,
                 'price' => $request->price,
                 'stok' => $request->stok,

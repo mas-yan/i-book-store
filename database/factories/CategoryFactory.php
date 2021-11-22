@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Product::class;
+    protected $model = Category::class;
 
     /**
      * Define the model's default state.
@@ -23,14 +23,9 @@ class ProductFactory extends Factory
     {
         $name = $this->faker->name();
         return [
-            'category_id' => $this->faker->numberBetween(1, 13),
-            // 'category_id' => '1',
-            'title' => $name,
+            'name' => $name,
             'slug' => \Str::slug($name),
-            'stok' => '100',
-            'price' => '80000000',
-            'image' => 'lwhX6QGkQjMC9ZJJI2h3UjPDov4lOKSeHNwQ6Lf3.png',
-            'detail_product' => $this->faker->word(10)
+            'image' => 'YWMIihfv5gtbOGmY2hfkpTweonO9MauYlZA3FLnY.png',
         ];
     }
 }

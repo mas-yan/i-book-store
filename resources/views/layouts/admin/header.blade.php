@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   {{-- sweet alert --}}
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  @yield('header')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">

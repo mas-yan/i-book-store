@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('categoriesTable', [CategoryController::class, 'categoriesTable'])->name('categoriesTable');
     Route::resource('/categories', CategoryController::class)->except('show');
     Route::get('/dataDiscount', [DiscountController::class, 'dataDiscount']);
+    Route::get('/discountProduk', [DiscountController::class, 'loadData']);
     Route::resource('/discount', DiscountController::class)->except('show');
     Route::resource('/product', ProductController::class);
     Route::get('/dataProducts', [ProductController::class, 'dataProducts']);
