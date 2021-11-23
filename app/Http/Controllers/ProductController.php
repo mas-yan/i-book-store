@@ -22,6 +22,9 @@ class ProductController extends Controller
             ->addColumn('price', function ($price) {
                 return moneyFormat($price->price);
             })
+            ->addColumn('title', function ($data) {
+                return '<div class="d-inline-block text-truncate" style="max-width: 150px;"">' . $data->title . '</div>';
+            })
             ->addColumn('action', function ($data) {
                 $action = '<div class="text-center"><a href="' . route("product.edit", $data->slug) . '" width="130" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a> | <button onclick="destroy(this.id)" id="' . $data->id . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button> | <a href="' . route("product.show", $data->slug) . '" width="130" class="btn btn-sm btn-success"><i class="fas fa-eye"></i> Show</a></div>';
                 return $action;
@@ -33,7 +36,7 @@ class ProductController extends Controller
                 $gambar = '<div class="text-center"><img src="' . $image->image . '" style="height:65px" class="rounded"></div>';
                 return $gambar;
             })
-            ->rawColumns(['price', 'image', 'category', 'action'])
+            ->rawColumns(['price', 'title', 'image', 'category', 'action'])
             ->toJson();
     }
     /**

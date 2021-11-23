@@ -19,7 +19,7 @@
                                 <th>Category</th>
                                 <th>Price</th>
                                 <th>Stok</th>
-                                <th>action</th>
+                                <th width="250px">action</th>
                             </tr>
                         </thead>
                     </table>

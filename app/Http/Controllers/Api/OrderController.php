@@ -49,7 +49,7 @@ class OrderController extends Controller
     public function addCart(Product $product)
     {
         $customer = Customer::find(auth()->guard('api')->user()->id);
-        $cart = $product->customer()->first();
+        $cart = $product->customer()->where('id', auth()->guard('api')->user()->id)->first();
         if ($cart) {
             $cart->pivot->qty += 1;
             $cart->pivot->save();
