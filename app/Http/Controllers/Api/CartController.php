@@ -23,7 +23,7 @@ class CartController extends Controller
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
-        })->select('products.id', 'title', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->get();
+        })->select('products.id', 'title', 'slug', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->get();
         return response()->json([
             'success' => true,
             'message' => 'Data cart',

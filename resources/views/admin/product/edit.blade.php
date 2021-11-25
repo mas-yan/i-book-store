@@ -1,5 +1,9 @@
 @extends('layouts.admin.master')
 @section('title','Admin - Product')
+@section('header')
+<link rel="stylesheet" href="{{asset('/')}}plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('/')}}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+@endsection
 @section('content')
     
 <div class="card card-primary rounded border-0">
@@ -22,10 +26,9 @@
         </div>
         <div class="form-group">
           <label for="category">category</label>
-          <select name="category" id="category" class="form-control @error('category') is-invalid @enderror">
-            <option value="">--PILIIH--</option>
+          <select class="form-control select2 @error('category') is-invalid @enderror" name="category" id="cari" style="width: 100%;">
             @foreach ($category as $item)
-              <option value="{{$item->id}}" {{(old('category',$product->category_id) == $item->id) ? 'selected':''}}>{{$item->name}}</option>
+              <option value="{{old('category',$product->category_id)}}" {{(old('category',$product->category_id) == $item->id) ? 'selected':''}}>{{(old('category',$product->category_id) == $item->id) ? $item->name : ''}}</option>
             @endforeach
           </select>
           @error('category') 
@@ -38,6 +41,69 @@
           <label for="price">Price</label>
           <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{old('price',$product->price)}}" id="price" placeholder="Price">
           @error('price') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="jumlah_halaman">Jumlah Halaman</label>
+          <input type="number" class="form-control @error('jumlah_halaman') is-invalid @enderror" name="jumlah_halaman" value="{{old('jumlah_halaman',$product->jumlah_halaman)}}" id="jumlah_halaman" placeholder="Jumlah Halaman">
+          @error('jumlah_halaman') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="panjang">Panjang</label>
+          <input type="number" class="form-control @error('panjang') is-invalid @enderror" step=0.01 name="panjang" value="{{old('panjang',$product->panjang)}}" id="panjang" placeholder="Panjang">
+          @error('panjang') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="bahasa">Bahasa</label>
+          <input type="text" class="form-control @error('bahasa') is-invalid @enderror" name="bahasa" value="{{old('bahasa',$product->bahasa)}}" id="bahasa" placeholder="Bahasa">
+          @error('bahasa') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="lebar">Lebar</label>
+          <input type="number" step=0.01 class="form-control @error('lebar') is-invalid @enderror" name="lebar" value="{{old('lebar',$product->lebar)}}" id="lebar" placeholder="Lebar">
+          @error('lebar') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="berat">Berat</label>
+          <input type="number" step=0.01 class="form-control @error('berat') is-invalid @enderror" name="berat" value="{{old('berat',$product->berat)}}" id="berat" placeholder="Berat">
+          @error('berat') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="tanggal_terbit">Tanggal Terbit</label>
+          <input type="date" class="form-control @error('tanggal_terbit') is-invalid @enderror" name="tanggal_terbit" value="{{old('tanggal_terbit',$product->tanggal_terbit)}}" id="tanggal_terbit" placeholder="Tanggal Terbit">
+          @error('tanggal_terbit') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="penerbit">Penerbit</label>
+          <input type="text" class="form-control @error('penerbit') is-invalid @enderror" name="penerbit" value="{{old('penerbit',$product->penerbit)}}" id="penerbit" placeholder="Penerbit">
+          @error('penerbit') 
             <div class="invalid-feedback">
               {{$message}}
             </div>
@@ -68,7 +134,7 @@
         </div>
         <div class="form-group">
           <label for="detail">Desciption Product</label>
-          <textarea class="form-control @error('detail') is-invalid @enderror" name="detail" id="detail" placeholder="Detail Product" rows="10">{{old('detail',$product->detail_product)}}</textarea>
+          <textarea class="form-control @error('detail') is-invalid @enderror" name="detail" id="detail" placeholder="Detail Product" rows="10">{{old('detail',$product->deskripsi_product)}}</textarea>
           @error('detail') 
             <div class="invalid-feedback">
               {{$message}}
@@ -84,7 +150,30 @@
 @endsection
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.7.0/tinymce.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="{{asset('/')}}plugins/select2/js/select2.full.min.js"></script>
 <script>
     tinymce.init({selector:'textarea'});
+
+    $('#cari').select2({
+      placeholder: 'Category...',
+      ajax: {
+        url: '/productCategory',
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data) {
+          return {
+            results:  $.map(data, function (item) {
+              console.log(item);
+              return {
+                text: item.name,
+                id: item.id
+              }
+            })
+          };
+        },
+        cache: true
+      }
+    });
 </script>
 @endsection

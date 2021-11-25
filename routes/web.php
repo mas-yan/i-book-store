@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dataDiscount', [DiscountController::class, 'dataDiscount']);
     Route::get('/discountProduk', [DiscountController::class, 'loadData']);
     Route::resource('/discount', DiscountController::class)->except('show');
+    Route::get('/productCategory', [ProductController::class, 'loadData']);
     Route::resource('/product', ProductController::class);
     Route::get('/dataProducts', [ProductController::class, 'dataProducts']);
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

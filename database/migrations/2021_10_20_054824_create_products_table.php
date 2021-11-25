@@ -19,8 +19,15 @@ class CreateProductsTable extends Migration
             $table->string('title')->unique();
             $table->string('slug');
             $table->integer('stok');
+            $table->string('jumlah_halaman');
+            $table->string('penerbit');
+            $table->string('tanggal_terbit');
+            $table->float('berat');
+            $table->float('lebar');
+            $table->string('bahasa');
+            $table->float('panjang');
             $table->bigInteger('price');
-            $table->text('detail_product');
+            $table->text('deskripsi_product');
             $table->string('image');
             $table->timestamps();
         });

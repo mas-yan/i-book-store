@@ -42,7 +42,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|unique:categories,name',
-            'image' => 'required|image|mimes:jpeg,jpg,png|max:2000'
+            'image' => 'required|image|mimes:jpeg,jpg,png,svg|max:2000'
         ]);
 
         $image = $request->file('image');
@@ -105,6 +105,7 @@ class CategoryController extends Controller
             $category = Category::where('slug', $category->slug)->first();
             $category->update([
                 'name' => $request->title,
+                'slug' => Str::slug($request->title),
             ]);
         } else {
             $this->validate($request, [
@@ -112,7 +113,7 @@ class CategoryController extends Controller
                     'required',
                     Rule::unique('products')->ignore($category->id),
                 ],
-                'image' => 'required|image|mimes:jpeg,jpg,png|max:2000'
+                'image' => 'required|image|mimes:jpeg,jpg,png,svg|max:2000'
             ]);
             $category = Category::where('slug', $category->slug)->first();
             Storage::disk('local')->delete('public/categories/' . basename($category->image));
@@ -122,6 +123,7 @@ class CategoryController extends Controller
 
             $category->update([
                 'name' => $request->title,
+                'slug' => Str::slug($request->title),
                 'image' => $image->hashName(),
             ]);
         }

@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index()
     {
         // get data Category 
-        $categories = Category::latest()->paginate(24);
+        $categories = Category::orderby('name', 'asc')->paginate(24);
 
         // return json category
         return  response()->json([
@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function category()
     {
         // get category
-        $categories = Category::latest()->take('5')->get();
+        $categories = Category::latest()->take('4')->get();
 
         // return json category
         return response()->json([
@@ -46,7 +46,7 @@ class CategoryController extends Controller
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
-        })->select('products.id', 'category_id', 'title', 'slug', 'stok', 'price', 'detail_product', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
+        })->select('products.id', 'category_id', 'title', 'slug', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
         // dd($product);
 
         if ($categories) {

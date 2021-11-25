@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -54,6 +55,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function loadData(Request $request)
+    {
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = DB::table('categories')->select('id', 'name')->where('name', 'LIKE', '%' . $cari . '%')->get();
+            return response()->json($data);
+        }
+    }
+
     public function create()
     {
         $categories = Category::latest()->get();
@@ -68,10 +79,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
             'title' => 'required|unique:products,title',
             'category' => 'required',
             'detail' => 'required',
+            'jumlah_halaman' => 'required',
+            'penerbit' => 'required',
+            'tanggal_terbit' => 'required',
+            'berat' => 'required',
+            'lebar' => 'required',
+            'bahasa' => 'required',
+            'panjang' => 'required',
             'stok' => 'required',
             'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2000'
@@ -87,7 +106,15 @@ class ProductController extends Controller
             'image' => $image->hashName(),
             'price' => $request->price,
             'stok' => $request->stok,
-            'detail_product' => $request->detail
+            'jumlah_halaman' => $request->jumlah_halaman,
+            'penerbit' => $request->penerbit,
+            'tanggal_terbit' => $request->tanggal_terbit,
+            'berat' => $request->berat,
+            'lebar' => $request->lebar,
+            'bahasa' => $request->bahasa,
+            'panjang' => $request->panjang,
+            'stok' => $request->stok,
+            'deskripsi_product' => $request->detail
         ]);
 
         if ($product) {
@@ -140,6 +167,13 @@ class ProductController extends Controller
                 ],
                 'category' => 'required',
                 'detail' => 'required',
+                'jumlah_halaman' => 'required',
+                'penerbit' => 'required',
+                'tanggal_terbit' => 'required',
+                'berat' => 'required',
+                'lebar' => 'required',
+                'bahasa' => 'required',
+                'panjang' => 'required',
                 'stok' => 'required',
                 'price' => 'required|numeric',
             ]);
@@ -148,8 +182,15 @@ class ProductController extends Controller
                 'title' => $request->title,
                 'category_id' => $request->category,
                 'price' => $request->price,
+                'jumlah_halaman' => $request->jumlah_halaman,
+                'penerbit' => $request->penerbit,
+                'tanggal_terbit' => $request->tanggal_terbit,
+                'berat' => $request->berat,
+                'lebar' => $request->lebar,
+                'bahasa' => $request->bahasa,
+                'panjang' => $request->panjang,
                 'stok' => $request->stok,
-                'detail_product' => $request->detail,
+                'deskripsi_product' => $request->detail,
             ]);
         } else {
             $this->validate($request, [
@@ -159,6 +200,13 @@ class ProductController extends Controller
                 ],
                 'category' => 'required',
                 'detail' => 'required',
+                'jumlah_halaman' => 'required',
+                'penerbit' => 'required',
+                'tanggal_terbit' => 'required',
+                'berat' => 'required',
+                'lebar' => 'required',
+                'bahasa' => 'required',
+                'panjang' => 'required',
                 'stok' => 'required',
                 'price' => 'required|numeric',
                 'image' => 'required|image|mimes:jpeg,jpg,png,svg|max:2000'
@@ -174,8 +222,15 @@ class ProductController extends Controller
                 'slug' => Str::slug($request->title),
                 'image' => $image->hashName(),
                 'price' => $request->price,
+                'jumlah_halaman' => $request->jumlah_halaman,
+                'penerbit' => $request->penerbit,
+                'tanggal_terbit' => $request->tanggal_terbit,
+                'berat' => $request->berat,
+                'lebar' => $request->lebar,
+                'bahasa' => $request->bahasa,
+                'panjang' => $request->panjang,
                 'stok' => $request->stok,
-                'detail_product' => $request->detail
+                'deskripsi_product' => $request->detail
             ]);
         }
 

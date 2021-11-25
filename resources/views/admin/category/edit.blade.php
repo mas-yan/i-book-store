@@ -12,15 +12,6 @@
               @csrf
               <div class="card-body">
                 <div class="form-group">
-                  <label for="title">Title</label>
-                  <input type="text" value="{{old('title',$category->name)}}" class="form-control @error('title') is-invalid @enderror" name="title" id="title" placeholder="Title Category">
-                  @error('title') 
-                    <div class="invalid-feedback">
-                      {{$message}}
-                    </div>
-                  @enderror
-                </div>
-                <div class="form-group">
                   <label for="image">Image</label>
                   <div class="@error('image') is-invalid @enderror input-group">
                     <div class="custom-file">
@@ -32,6 +23,15 @@
                   <div class="invalid-feedback">
                     {{$message}}
                   </div>
+                  @enderror
+                </div>
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" value="{{old('title',$category->name)}}" class="form-control @error('title') is-invalid @enderror" name="title" id="title" placeholder="Title Category">
+                  @error('title') 
+                    <div class="invalid-feedback">
+                      {{$message}}
+                    </div>
                   @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update Category</button>
