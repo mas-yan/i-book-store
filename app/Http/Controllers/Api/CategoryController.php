@@ -22,6 +22,16 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function random()
+    {
+        $categories = Category::inRandomOrder()->limit(12)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'List Data Category',
+            'data' => $categories
+        ]);
+    }
+
     public function category()
     {
         // get category
@@ -39,21 +49,18 @@ class CategoryController extends Controller
     {
         // get detail category with product
         $categories = Category::where('slug', $slug)->first();
-        // dd($categories->id);
-        // $categories->setRelation('lessons', $categories->products()->latest()->paginate(24));
 
         $product = Product::where('category_id', $categories->id)->leftjoin('discounts', function ($join) {
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
         })->select('products.id', 'category_id', 'title', 'slug', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
-        // dd($product);
 
         if ($categories) {
             return response()->json([
                 'success' => true,
                 'message' => 'List Data Campaign Berdasarkan Category : ' . $categories->name,
-                'category' => $categories->name,
+                'category' => $categories,
                 'data' => $product
             ]);
         }

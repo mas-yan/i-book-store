@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -45,27 +44,14 @@ class OrderController extends Controller
         ]);
     }
 
-
-    public function addCart(Product $product)
-    {
-        $customer = Customer::find(auth()->guard('api')->user()->id);
-        $cart = $product->customer()->where('id', auth()->guard('api')->user()->id)->first();
-        if ($cart) {
-            $cart->pivot->qty += 1;
-            $cart->pivot->save();
-        } else {
-            $product->customer()->attach($customer, ['qty' => 1]);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Add Cart',
-            'data' => $product
-        ]);
-    }
-
     public function transaction(Request $request)
     {
+        // $data_order = Order::where('invoice', 'TRX-YOZA6SQFY5')->first();
+        // $product = $data_order->product()->get();
+        // foreach ($product as $item) {
+        //     dump($item->pivot->qty);
+        // }
+        // dd('ook');
         try {
             DB::beginTransaction();
 
