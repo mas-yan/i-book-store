@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\RajaOngkirController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\CheckOngkirController;
@@ -49,8 +50,12 @@ Route::middleware('auth:api')->group(function () {
   Route::get('/order', [OrderController::class, 'index']);
   Route::get('/order/{invoice}', [OrderController::class, 'show']);
   Route::post('/transaction', [OrderController::class, 'transaction']);
-  Route::post('/ongkir', [CheckOngkirController::class, 'check_ongkir']);
-  Route::get('/cities/{province_id}', [CheckOngkirController::class, 'getCities']);
-  Route::get('/provinces', [CheckOngkirController::class, 'index']);
+  // Route::post('/ongkir', [CheckOngkirController::class, 'check_ongkir']);
+  // Route::get('/cities/{province_id}', [CheckOngkirController::class, 'getCities']);
+  // Route::get('/provinces', [CheckOngkirController::class, 'index']);
+  // tes
+  Route::get('/provinces', [RajaOngkirController::class, 'getProvinces']);
+  Route::get('/cities/{province_id}', [RajaOngkirController::class, 'getCities']);
+  Route::post('/ongkir', [RajaOngkirController::class, 'checkOngkir']);
 });
 Route::post('/transaction/notification', [OrderController::class, 'notificationHandler']);

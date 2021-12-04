@@ -75,7 +75,7 @@ class OrderController extends Controller
                 'city' => $request->city,
                 'province' => $request->province,
                 'address' => $request->address,
-                'service' => $request->service,
+                'service' => 'sdgjsgdj',
                 'courir' => $request->courir,
                 'cost' => $request->cost,
                 'grand_total' => $request->grand_total,
@@ -98,11 +98,11 @@ class OrderController extends Controller
 
             $customer = Customer::find(auth()->guard('api')->user()->id);
 
-            foreach ($customer->product as $item) {
-                $order->product()->attach($item->id, ['qty' => $item->pivot->qty]);
+            for ($i = 0; $i < count($request->product); $i++) {
+                // $sync_data[$allergy_ids[$i]] = ['severity' => $severities[$i]];
+                $order->product()->attach($request->product[$i], ['qty' => $request->qty[$i]]);
+                $customer->product()->detach($request->product[$i]);
             }
-
-            $customer->product()->detach();
 
             $this->response['snap_token'] = $snapToken;
 
