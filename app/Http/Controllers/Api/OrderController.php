@@ -75,7 +75,6 @@ class OrderController extends Controller
                 'city' => $request->city,
                 'province' => $request->province,
                 'address' => $request->address,
-                'service' => 'sdgjsgdj',
                 'courir' => $request->courir,
                 'cost' => $request->cost,
                 'grand_total' => $request->grand_total,
