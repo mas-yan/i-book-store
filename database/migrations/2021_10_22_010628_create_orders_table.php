@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->string('province')->nullable();
             $table->string('address')->nullable();
             $table->string('courir')->nullable();
+            $table->string('service')->nullable();
             $table->bigInteger('cost')->nullable();
             $table->bigInteger('grand_total')->nullable();
             $table->timestamps();

@@ -38,7 +38,7 @@ class Order extends Model
 
     public function product()
     {
-        return $this->belongsToMany(Product::class)->withPivot('qty');
+        return $this->belongsToMany(Product::class)->withPivot('qty', 'price');
     }
 
     public function getCreatedAtAttribute($date)

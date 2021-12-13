@@ -24,11 +24,13 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::with('Discount')->where('slug', $slug)->first();
+        $product = Product::with(['Discount'], ['pivot' => 1])->where('slug', $slug)->first();
+        $data = $product;
+        $data['pivot'] = ['qty' => 1];
         return response()->json([
             'success' => true,
             'message' => 'Get Data Product ' . $product->title,
-            'data' => $product
+            'data' => $data
         ]);
     }
 }

@@ -35,12 +35,13 @@ class OrderController extends Controller
         ]);
     }
 
-    public function show(Order $invoice)
+    public function show($invoice)
     {
+        $data = Order::where('invoice', $invoice)->with(['product'])->get();
         return response()->json([
             'success' => true,
             'message' => 'List Orders Customer',
-            'data' => $invoice
+            'data' => $data
         ]);
     }
 
@@ -76,6 +77,7 @@ class OrderController extends Controller
                 'province' => $request->province,
                 'address' => $request->address,
                 'courir' => $request->courir,
+                'service' => $request->service,
                 'cost' => $request->cost,
                 'grand_total' => $request->grand_total,
             ]);
@@ -85,9 +87,9 @@ class OrderController extends Controller
                     'order_id' => $order->invoice,
                     'gross_amount' => $order->grand_total
                 ],
-                'customer_detail' => [
-                    'first_name' => auth()->guard('api')->user()->name,
-                    'email' => auth()->guard('api')->user()->email
+                'customer_details' => [
+                    'first_name'       => auth()->guard('api')->user()->name,
+                    'email'            => auth()->guard('api')->user()->email,
                 ]
             ];
 
@@ -98,8 +100,7 @@ class OrderController extends Controller
             $customer = Customer::find(auth()->guard('api')->user()->id);
 
             for ($i = 0; $i < count($request->product); $i++) {
-                // $sync_data[$allergy_ids[$i]] = ['severity' => $severities[$i]];
-                $order->product()->attach($request->product[$i], ['qty' => $request->qty[$i]]);
+                $order->product()->attach($request->product[$i], ['qty' => $request->qty[$i], 'price' => $request->price[$i]]);
                 $customer->product()->detach($request->product[$i]);
             }
 
@@ -114,6 +115,7 @@ class OrderController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Order Berhasil Dibuat!',
+            'data' => $order,
             $this->response
         ]);
     }
