@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\customer;
+use App\Models\Customer;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $year = Carbon::now()->format('Y');
 
         // new member
-        $customer = customer::whereMonth('created_at', $month)->whereYear('created_at', $year)->count();
+        $customer = Customer::whereMonth('created_at', $month)->whereYear('created_at', $year)->count();
 
         // new order
         $order = Order::whereMonth('created_at', $month)->whereYear('created_at', $year)->count();
