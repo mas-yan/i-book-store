@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -28,14 +29,22 @@ class ProductController extends Controller
     {
         $product = Product::with(['Discount'], ['pivot' => 1])->where('slug', $slug)->first();
         $data = $product;
+        $rate = DB::table('reviews')
+            ->select(DB::raw('round(AVG(star),0) as star'))
+            ->first();
         $data['pivot'] = ['qty' => 1];
         return response()->json([
             'success' => true,
             'message' => 'Get Data Product ' . $product->title,
             'data' => $data,
             'count' => $product->review()->count(),
-            'rating' => $product->review()->avg('star'),
+            'rating' => $rate->star,
             'review' => $product->review()->paginate(10),
         ]);
     }
 }
+
+
+// DB::table('reviews')
+            // ->select(DB::raw('round(AVG(star),0) as star'))
+            // ->first();
