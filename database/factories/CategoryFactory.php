@@ -25,7 +25,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $name,
             'slug' => \Str::slug($name),
-            'image' => 'YWMIihfv5gtbOGmY2hfkpTweonO9MauYlZA3FLnY.png',
+            'image' => 'dkSbgiOfxgvbhogJDeZO5JITgRxWJbt6tYjOiSQ7.jpg',
         ];
     }
 }

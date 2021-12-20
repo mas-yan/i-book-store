@@ -47,12 +47,6 @@ class OrderController extends Controller
 
     public function transaction(Request $request)
     {
-        // $data_order = Order::where('invoice', 'TRX-YOZA6SQFY5')->first();
-        // $product = $data_order->product()->get();
-        // foreach ($product as $item) {
-        //     dump($item->pivot->qty);
-        // }
-        // dd('ook');
         try {
             DB::beginTransaction();
 

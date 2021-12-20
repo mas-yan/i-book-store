@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -29,8 +30,15 @@ class ProductFactory extends Factory
             'slug' => \Str::slug($name),
             'stok' => '100',
             'price' => '80000000',
-            'image' => 'lwhX6QGkQjMC9ZJJI2h3UjPDov4lOKSeHNwQ6Lf3.png',
-            'detail_product' => $this->faker->word(10)
+            'jumlah_halaman' => '12',
+            'penerbit' => 'ppp',
+            'tanggal_terbit' => Carbon::now(),
+            'berat' => '1',
+            'lebar' => '12',
+            'bahasa' => 'indo',
+            'panjang' => '11',
+            'image' => 'dcElj3vVMIOfdX032IEmZoek9aAsJ4u5NkxqGPjn.jpg',
+            'deskripsi_product' => $this->faker->word(10)
         ];
     }
 }

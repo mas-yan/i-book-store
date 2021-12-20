@@ -22,12 +22,31 @@ class Customer extends Authenticatable
         return $this->belongsToMany(Product::class)->withPivot('qty');
     }
 
+    public function review()
+    {
+        return $this->belongsToMany(Product::class, 'reviews')->withPivot('star', 'review', 'image_review')->withTimestamps();
+    }
+
     public function getAvatarAttribute($avatar)
     {
         if ($avatar != null) :
             return asset('storage/customer/' . $avatar);
         else :
             return 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
+        endif;
+    }
+
+    protected $appends = ['image_review'];
+    public function getImageReviewAttribute()
+    {
+        if ($this->pivot != null) :
+            if ($this->pivot->image_review) {
+                return asset('storage/review/' . $this->pivot->image_review);
+            } else {
+                return null;
+            }
+        else :
+            return null;
         endif;
     }
 

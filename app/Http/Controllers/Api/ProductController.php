@@ -30,7 +30,10 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Get Data Product ' . $product->title,
-            'data' => $data
+            'data' => $data,
+            'count' => $product->review()->count(),
+            'rating' => $product->review()->avg('star'),
+            'review' => $product->review()->paginate(10),
         ]);
     }
 }

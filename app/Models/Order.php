@@ -45,9 +45,4 @@ class Order extends Model
     {
         return Carbon::parse($date)->format('d-M-Y');
     }
-
-    // public function getGrandTotalAttribute($total)
-    // {
-    //     return $total * $this->pivot();
-    // }
 }

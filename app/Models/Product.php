@@ -40,4 +40,9 @@ class Product extends Model
     {
         return $this->hasOne(Discount::class, 'product_id');
     }
+
+    public function review()
+    {
+        return $this->belongsToMany(Customer::class, 'reviews')->withPivot('star', 'review', 'image_review')->withTimestamps()->latest('pivot_created_at');
+    }
 }
