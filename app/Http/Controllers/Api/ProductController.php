@@ -29,14 +29,13 @@ class ProductController extends Controller
     {
         $product = Product::with(['Discount'], ['pivot' => 1])->where('slug', $slug)->first();
         $data = $product;
-        $rate = DB::table('reviews')->selectRaw('AVG(star) as star')->first();
         $data['pivot'] = ['qty' => 1];
         return response()->json([
             'success' => true,
             'message' => 'Get Data Product ' . $product->title,
             'data' => $data,
             'count' => $product->review()->count(),
-            'rating' => $rate->star,
+            'rating' => $product->review()->avg('star'),
             'review' => $product->review()->paginate(10),
         ]);
     }
