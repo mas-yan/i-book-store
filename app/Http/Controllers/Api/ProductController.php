@@ -10,7 +10,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::leftjoin('discounts', function ($join) {
+        $product = Product::when(request()->q, function ($product) {
+            $product = $product->where('title', 'like', '%' . request()->q . '%');
+        })->leftjoin('discounts', function ($join) {
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
