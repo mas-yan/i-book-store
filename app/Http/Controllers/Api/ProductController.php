@@ -29,9 +29,7 @@ class ProductController extends Controller
     {
         $product = Product::with(['Discount'], ['pivot' => 1])->where('slug', $slug)->first();
         $data = $product;
-        $rate = DB::table('reviews')
-            ->select(DB::raw('round(AVG(star),0) as star'))
-            ->first();
+        $rate = DB::table('reviews')->selectRaw('AVG(star) as star')->first();
         $data['pivot'] = ['qty' => 1];
         return response()->json([
             'success' => true,
@@ -43,8 +41,3 @@ class ProductController extends Controller
         ]);
     }
 }
-
-
-// DB::table('reviews')
-            // ->select(DB::raw('round(AVG(star),0) as star'))
-            // ->first();
