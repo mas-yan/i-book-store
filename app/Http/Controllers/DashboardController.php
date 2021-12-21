@@ -38,7 +38,7 @@ class DashboardController extends Controller
         // failed
         $failed = Order::where('status', 'failed')->count();
 
-        $chart = Order::select(DB::raw('sum(grand_total) as data'), DB::raw('MONTH(created_at) month'))
+        $chart = Order::select(DB::raw('sum(grand_total) as data'), DB::raw('MONTH(created_at) as month'))
             ->where('status', 'success')
             ->groupby('month')
             ->whereYear('created_at', $year)
