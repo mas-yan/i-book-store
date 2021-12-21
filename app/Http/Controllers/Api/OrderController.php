@@ -124,11 +124,13 @@ class OrderController extends Controller
         if ($notification->signature_key != $validSignatureKey) {
             return response(['message' => 'Invalid signature'], 403);
         }
-        $transaction = $notification->status;
+
+        $transaction  = $notification->transaction_status;
         $type         = $notification->payment_type;
         $orderId      = $notification->order_id;
         $fraud        = $notification->fraud_status;
 
+        //data order
         $data_order = Order::where('invoice', $orderId)->first();
 
         if ($transaction == 'capture') {
