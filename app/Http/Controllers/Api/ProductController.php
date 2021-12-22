@@ -11,6 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
+        // get product and when search
         $product = Product::when(request()->q, function ($product) {
             $product = $product->where('title', 'like', '%' . request()->q . '%');
         })->leftjoin('discounts', function ($join) {
@@ -27,6 +28,7 @@ class ProductController extends Controller
 
     public function show($slug)
     {
+        // get product detail
         $product = Product::with(['Discount'], ['pivot' => 1])->where('slug', $slug)->first();
         $data = $product;
         $data['pivot'] = ['qty' => 1];

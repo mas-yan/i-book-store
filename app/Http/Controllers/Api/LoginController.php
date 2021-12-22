@@ -18,6 +18,7 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request)
     {
+        // validasi request
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
@@ -27,7 +28,9 @@ class LoginController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        // jika email ditemukan
         $customer = Customer::where('email', $request->email)->first();
+        // cek password
         if (!$customer || !Hash::check($request->password, $customer->password)) {
             return response()->json([
                 'success' => false,
@@ -35,6 +38,7 @@ class LoginController extends Controller
             ], 400);
         }
 
+        // jika password valid
         return response()->json([
             'success' => true,
             'message' => 'Login Success!',

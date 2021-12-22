@@ -40,16 +40,6 @@ class CompanyController extends Controller
                 'time_operational' => $request->time_operational,
             ]);
         } else {
-            // $this->validate($request, [
-            //     'name' => 'required',
-            //     'address' => 'required',
-            //     'about' => 'required',
-            //     'logo' => 'required|image|mimes:jpeg,jpg,png|max:2000',
-            //     'long' => 'required',
-            //     'lat' => 'required',
-            //     'day_operational' => 'required',
-            //     'time_operational' => 'required',
-            // ]);
 
             Storage::disk('local')->delete('public/Company/' . basename($company->logo));
 

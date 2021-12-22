@@ -13,6 +13,11 @@ use Midtrans\Snap;
 class OrderController extends Controller
 {
 
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         // Set your Merchant Server Key
@@ -25,8 +30,14 @@ class OrderController extends Controller
         \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
     }
 
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
+        // get order customer
         $order = Order::where('customer_id', auth()->guard('api')->user()->id)->latest()->paginate(5);
         return response()->json([
             'success' => true,
@@ -37,6 +48,7 @@ class OrderController extends Controller
 
     public function show($invoice)
     {
+        // show order detail
         $data = Order::where('invoice', $invoice)->with(['product'])->get();
         return response()->json([
             'success' => true,
@@ -45,6 +57,12 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * store
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function transaction(Request $request)
     {
         try {
@@ -59,7 +77,7 @@ class OrderController extends Controller
                 $random .= rand(0, 1) ? rand(0, 9) : chr(rand(ord('a'), ord('z')));
             }
 
-            $no_invoice = 'TRX-' . Str::upper($random);
+            $no_invoice = 'IBK' . Str::upper($random);
 
             $order = Order::create([
                 'customer_id' => auth()->guard('api')->user()->id,
@@ -76,6 +94,7 @@ class OrderController extends Controller
                 'grand_total' => $request->grand_total,
             ]);
 
+            // Buat transaksi ke midtrans kemudian save snap tokennya
             $payload = [
                 'transaction_details' => [
                     'order_id' => $order->invoice,
@@ -87,6 +106,7 @@ class OrderController extends Controller
                 ]
             ];
 
+            //create snap token
             $snapToken = Snap::getSnapToken($payload);
             $order->snap_token = $snapToken;
             $order->save();
@@ -114,6 +134,12 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * notificationHandler
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function notificationHandler(Request $request)
     {
         $payload      = $request->getContent();

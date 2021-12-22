@@ -14,11 +14,14 @@ class DiscountController extends Controller
 
     public function dataDiscount()
     {
-        $product = Discount::leftJoin('products', 'products.id', '=', 'discounts.product_id')->select('discount', 'start', 'end', 'title', 'products.id', 'price', 'price_discount', 'discounts.product_id', 'discounts.id as diskon_id')->orderBy('products.id', 'desc');
+        $product = Product::rightJoin('discounts', 'products.id', '=', 'discounts.product_id')->select('products.title', 'discounts.discount', 'discounts.start', 'discounts.end', 'products.id', 'price', 'price_discount', 'discounts.product_id', 'discounts.id as diskon_id')->orderBy('discounts.end', 'desc');
+
+
         return DataTables::of($product)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
-                $action = '<div class="text-center"><a href="' . route("discount.edit", $data->diskon_id) . '" width="130" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a> | <button onclick="destroy(this.id)" id="' . $data->diskon_id . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>';
+                $date = Carbon::now()->toDateString();
+                $action = $data->end < $date ? '<div class="text-center"><button class="btn btn-sm btn-success">Diskon Selesai</button></div>' : '<div class="text-center"><a href="' . route("discount.edit", $data->diskon_id) . '" width="130" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a> | <button onclick="destroy(this.id)" id="' . $data->diskon_id . '" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>';
                 return $action;
             })
             ->rawColumns(['action'])
@@ -72,6 +75,7 @@ class DiscountController extends Controller
         $disc = Discount::where('product_id', $product->id)->get();
         $date = Carbon::now()->toDateString();
 
+        // cek apakah akhir diskon kurang dari awal diskon
         if ($request->end < $request->start) {
             return redirect()->route('discount.create')->with('error', "Tentukan awal dan akhir diskon dengan benar");
         }
@@ -85,6 +89,7 @@ class DiscountController extends Controller
             }
         }
 
+        // hitung diskon
         $price = ($request->discount / 100) * $product->price;
 
         $discount = Discount::create([
@@ -146,21 +151,9 @@ class DiscountController extends Controller
 
         $price = ($request->discount / 100) * $product->price;
 
-        $date = Carbon::now()->toDateString();
-
         if ($request->end < $request->start) {
             return redirect()->route('discount.edit', $id)->with('error', "Tentukan awal dan akhir diskon dengan benar");
         }
-
-        // cek apakah sudah ada diskon yang masih berjalan
-        if ($disc) {
-            foreach ($disc as $value) {
-                if ($value->end > $date) {
-                    return redirect()->route('discount.edit', $id)->with('error', "sudah ada diskon yang masih berjalan pada produk ini");
-                }
-            }
-        }
-
         $diskon->update([
             'discount' => $request->discount,
             'price_discount' => $product->price - $price,

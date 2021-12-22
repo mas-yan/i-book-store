@@ -24,7 +24,9 @@ class CategoryController extends Controller
 
     public function random()
     {
+        // get 12 data random category
         $categories = Category::inRandomOrder()->limit(12)->get();
+        // get username customer login
         return response()->json([
             'success' => true,
             'message' => 'List Data Category',
@@ -47,15 +49,17 @@ class CategoryController extends Controller
 
     public function show($slug)
     {
-        // get detail category with product
+        // find category
         $categories = Category::where('slug', $slug)->first();
 
+        // get detail category with product
         $product = Product::where('category_id', $categories->id)->leftjoin('discounts', function ($join) {
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
         })->select('products.id', 'category_id', 'title', 'slug', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
 
+        // jika category ditemukan
         if ($categories) {
             return response()->json([
                 'success' => true,

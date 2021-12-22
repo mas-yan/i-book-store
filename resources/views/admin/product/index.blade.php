@@ -41,10 +41,10 @@
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
             { data: 'image',name: 'image'},
-            { data: 'title',name: 'title'},
-            { data: 'category',name: 'category'},
-            { data: 'price',name: 'price' },
-            { data: 'stok',name: 'stok' },
+            { data: 'title',name: 'title',searchable: true},
+            { data: 'category',name: 'category',searchable: true},
+            { data: 'price',name: 'price',searchable: true },
+            { data: 'stok',name: 'stok'},
             { data: 'action',name: 'action' },
         ]
     })

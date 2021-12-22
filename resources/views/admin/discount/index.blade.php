@@ -42,12 +42,12 @@
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
             { data: 'title',name: 'title'},
-            { data: 'discount',name: 'discount'},
-            { data: 'start',name: 'start'},
-            { data: 'end',name: 'end' },
-            { data: 'price',name: 'price' },
-            { data: 'price_discount',name: 'price_discount' },
-            { data: 'action',name: 'action' },
+            { data: 'discount',name: 'discount',searchable: false},
+            { data: 'start',name: 'start',searchable: false},
+            { data: 'end',name: 'end',searchable: false},
+            { data: 'price',name: 'price',searchable: false },
+            { data: 'price_discount',name: 'price_discount',searchable: false },
+            { data: 'action',name: 'action',searchable: false },
         ]
     })
     
