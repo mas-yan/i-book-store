@@ -79,7 +79,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
             'title' => 'required|unique:products,title',
             'category' => 'required',
