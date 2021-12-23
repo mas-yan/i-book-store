@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -177,9 +178,27 @@ class OrderController extends Controller
                     /**
                      *   update invoice to success
                      */
-                    $data_order->update([
-                        'status' => 'success'
-                    ]);
+                    try {
+                        DB::beginTransaction();
+
+                        $data_order->update([
+                            'status' => 'success'
+                        ]);
+
+                        foreach ($data_order->product as $value) {
+                            $qty = $value->pivot->qty;
+                            $product = Product::find($value->id);
+                            $stok = $product->stok - $qty;
+                            dump($stok);
+                            $product->update([
+                                'stok' => $stok
+                            ]);
+                        }
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        DB::rollBack();
+                        throw $e;
+                    }
                 }
             }
         } elseif ($transaction == 'settlement') {
@@ -187,9 +206,27 @@ class OrderController extends Controller
             /**
              *   update invoice to success
              */
-            $data_order->update([
-                'status' => 'success'
-            ]);
+            try {
+                DB::beginTransaction();
+
+                $data_order->update([
+                    'status' => 'success'
+                ]);
+
+                foreach ($data_order->product as $value) {
+                    $qty = $value->pivot->qty;
+                    $product = Product::find($value->id);
+                    $stok = $product->stok - $qty;
+                    dump($stok);
+                    $product->update([
+                        'stok' => $stok
+                    ]);
+                }
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
         } elseif ($transaction == 'pending') {
 
 
