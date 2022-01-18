@@ -25,6 +25,15 @@
           @enderror
         </div>
         <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" class="form-control @error('author') is-invalid @enderror" name="author" value="{{old('author',$product->author)}}" id="author" placeholder="Author Product">
+          @error('author') 
+            <div class="invalid-feedback">
+              {{$message}}
+            </div>
+          @enderror
+        </div>
+        <div class="form-group">
           <label for="category">category</label>
           <select class="form-control select2 @error('category') is-invalid @enderror" name="category" id="cari" style="width: 100%;">
             @foreach ($category as $item)

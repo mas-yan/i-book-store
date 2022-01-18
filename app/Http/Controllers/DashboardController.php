@@ -46,7 +46,7 @@ class DashboardController extends Controller
             ->get();
 
         // get chart per month
-        $montChart = Order::select(DB::raw('MONTH(created_at) month'), DB::raw('MONTHNAME(created_at) data'))
+        $montChart = Order::select(DB::raw('MONTH(created_at) as month'), DB::raw('MONTHNAME(created_at) as data'))
             ->where('status', 'success')
             ->groupby('data')
             ->groupby('month')

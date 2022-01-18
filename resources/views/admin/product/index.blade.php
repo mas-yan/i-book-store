@@ -16,6 +16,7 @@
                                 <th>No</th>
                                 <th>Image</th>
                                 <th>Name</th>
+                                <th>Author</th>
                                 <th>Category</th>
                                 <th>Price</th>
                                 <th>Stok</th>
@@ -42,6 +43,7 @@
             { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
             { data: 'image',name: 'image'},
             { data: 'title',name: 'title',searchable: true},
+            { data: 'author',name: 'author',searchable: true},
             { data: 'category',name: 'category',searchable: true},
             { data: 'price',name: 'price',searchable: true },
             { data: 'stok',name: 'stok'},

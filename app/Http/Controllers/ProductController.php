@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function dataProducts()
     {
-        $product = Product::leftJoin('categories', 'categories.id', '=', 'products.category_id')->select('title', 'price', 'products.slug', 'stok', 'products.image', 'products.id', 'categories.name')->orderBy('products.created_at', 'desc');
+        $product = Product::leftJoin('categories', 'categories.id', '=', 'products.category_id')->select('title', 'author', 'price', 'products.slug', 'stok', 'products.image', 'products.id', 'categories.name')->orderBy('products.created_at', 'desc');
 
         return DataTables::of($product)
             ->addIndexColumn()
@@ -78,6 +78,7 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|unique:products,title',
+            'author' => 'required',
             'category' => 'required',
             'detail' => 'required',
             'jumlah_halaman' => 'required',
@@ -97,6 +98,7 @@ class ProductController extends Controller
 
         $product = Product::create([
             'title' => $request->title,
+            'author' => $request->author,
             'category_id' => $request->category,
             'slug' => Str::slug($request->title),
             'image' => $image->hashName(),
@@ -161,6 +163,7 @@ class ProductController extends Controller
                     'required',
                     Rule::unique('products')->ignore($product->id),
                 ],
+                'author' => 'required',
                 'category' => 'required',
                 'detail' => 'required',
                 'jumlah_halaman' => 'required',
@@ -176,6 +179,7 @@ class ProductController extends Controller
 
             $product->update([
                 'title' => $request->title,
+                'author' => $request->author,
                 'category_id' => $request->category,
                 'price' => $request->price,
                 'jumlah_halaman' => $request->jumlah_halaman,
@@ -195,6 +199,7 @@ class ProductController extends Controller
                     Rule::unique('products')->ignore($product->id),
                 ],
                 'category' => 'required',
+                'author' => 'required',
                 'detail' => 'required',
                 'jumlah_halaman' => 'required',
                 'penerbit' => 'required',
@@ -214,6 +219,7 @@ class ProductController extends Controller
 
             $product->update([
                 'title' => $request->title,
+                'author' => $request->author,
                 'category_id' => $request->category,
                 'slug' => Str::slug($request->title),
                 'image' => $image->hashName(),

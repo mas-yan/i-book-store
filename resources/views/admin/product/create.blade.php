@@ -24,6 +24,15 @@
                   @enderror
                 </div>
                 <div class="form-group">
+                  <label for="author">Author</label>
+                  <input type="text" class="form-control @error('author') is-invalid @enderror" name="author" value="{{old('author')}}" id="author" placeholder="Author">
+                  @error('author') 
+                    <div class="invalid-feedback">
+                      {{$message}}
+                    </div>
+                  @enderror
+                </div>
+                <div class="form-group">
                   <label for="category">category</label>
                   <select class="form-control select2 @error('category') is-invalid @enderror" name="category" id="cari" style="width: 100%;">
                     @foreach ($categories as $item)
@@ -74,7 +83,7 @@
                 </div>
                 <div class="form-group">
                   <label for="berat">Berat</label>
-                  <input type="number" step=0.01 class="form-control @error('berat') is-invalid @enderror" name="berat" value="{{old('berat')}}" id="berat" placeholder="Berat">
+                  <input type="number" step=any class="form-control @error('berat') is-invalid @enderror" name="berat" value="{{old('berat')}}" id="berat" placeholder="Berat">
                   @error('berat') 
                     <div class="invalid-feedback">
                       {{$message}}

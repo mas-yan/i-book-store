@@ -10,12 +10,12 @@
               <div class="row">
                 <div class="col-12 col-sm-6">
                   <div class="col-12">
-                    <img src="{{$product->image}}" class="product-image rounded" alt="Product Image">
+                    <img src="{{$product->image}}" class="product-image rounded img-fluid" alt="Product Image">
                   </div>
                 </div>
                 <div class="col-12 col-sm-6">
                   <h3 class="my-3 my-lg-auto">{{$product->title}}</h3>
-                  {{-- <p>{!!$product->deskripsi_product!!}</p> --}}
+                  <h5 class="text-secondary text-center mt-3">{{ $product->author }}</h5>
                   <hr>
                   <h4 class="mt-3">Stok : <small>{{$product->stok}}</small></h4>
                   <h4 class="mt-3">Berat : <small>{{$product->berat}}</small></h4>

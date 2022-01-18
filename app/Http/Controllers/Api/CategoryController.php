@@ -57,7 +57,7 @@ class CategoryController extends Controller
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
-        })->select('products.id', 'category_id', 'title', 'slug', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
+        })->select('products.id', 'category_id', 'title', 'author', 'slug', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
 
         // jika category ditemukan
         if ($categories) {

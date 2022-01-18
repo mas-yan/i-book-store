@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -18,7 +17,8 @@ class ProductController extends Controller
             $join->on('discounts.product_id', '=', 'products.id')
                 ->where('discounts.start', '<=', Carbon::now()->toDateString())
                 ->where('discounts.end', '>', Carbon::now()->toDateString());
-        })->select('products.id', 'category_id', 'title', 'slug', 'stok', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
+        })->select('products.id', 'category_id', 'title', 'author', 'slug', 'stok', 'price', 'image', 'discount', 'price_discount')->orderby('products.created_at', 'desc')->paginate(24);
+
         return response()->json([
             'success' => true,
             'message' => 'Get All List Data Product',

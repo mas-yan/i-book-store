@@ -134,7 +134,7 @@
         labels  : [@foreach($montChart as $data)'{{$data->data}}',@endforeach],
         datasets: [
           {
-            label               : 'Digital Goods',
+            label               : 'Income',
             backgroundColor     : 'rgba(60,141,188,0.9)',
             borderColor         : 'rgba(60,141,188,0.9)',
             pointRadius         : true,
