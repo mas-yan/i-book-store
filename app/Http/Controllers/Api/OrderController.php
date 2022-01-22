@@ -78,7 +78,7 @@ class OrderController extends Controller
                 $random .= rand(0, 1) ? rand(0, 9) : chr(rand(ord('a'), ord('z')));
             }
 
-            $no_invoice = 'IBK' . Str::upper($random);
+            $no_invoice = 'LM-' . Str::upper($random);
 
             $order = Order::create([
                 'customer_id' => auth()->guard('api')->user()->id,
@@ -189,7 +189,6 @@ class OrderController extends Controller
                             $qty = $value->pivot->qty;
                             $product = Product::find($value->id);
                             $stok = $product->stok - $qty;
-                            dump($stok);
                             $product->update([
                                 'stok' => $stok
                             ]);
@@ -217,7 +216,6 @@ class OrderController extends Controller
                     $qty = $value->pivot->qty;
                     $product = Product::find($value->id);
                     $stok = $product->stok - $qty;
-                    dump($stok);
                     $product->update([
                         'stok' => $stok
                     ]);
